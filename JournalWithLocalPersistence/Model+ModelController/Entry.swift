@@ -8,15 +8,16 @@
 
 import Foundation
 
-class Entry {
+class Entry: Codable {
     
     var title: String
     var bodyText: String
-    var timestamp: Date = Date()
+    var timestamp: Date
     
     init(title: String, bodyText: String) {
         self.title = title
         self.bodyText = bodyText
+        self.timestamp = Date()
     }
 }
 

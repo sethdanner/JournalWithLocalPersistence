@@ -11,14 +11,19 @@ import Foundation
 
 class EntryController {
     
-    let shared = EntryController()
+    static var shared = EntryController()
     var entries: [Entry] = []
+    
+    init() {
+        entries = load()
+    }
     
     // MARK: CRUD Functions
     func addNewEntryWith(title: String, bodyText: String) {
         
         let newEntry = Entry(title: title, bodyText: bodyText)
         entries.append(newEntry)
+        save()
     }
     
     func updateEntry(entry: Entry, title: String, bodyText: String) {
@@ -26,12 +31,14 @@ class EntryController {
         let entry = Entry(title: title, bodyText: bodyText)
         entry.title = title
         entry.bodyText = bodyText
+        save()
     }
     
     func deleteEntry(entry: Entry) {
         
         guard let index = self.entries.index(of: entry) else { return }
         self.entries.remove(at: index)
+        save()
     }
     
     // MARK: Persistence
@@ -61,7 +68,7 @@ class EntryController {
             let entries = try jsonDecoder.decode([Entry].self, from: data)
             return entries
         } catch let error {
-            print("Error loding entries: \(error)")
+            print("Error loading entries: \(error)")
         }
         return []
     }

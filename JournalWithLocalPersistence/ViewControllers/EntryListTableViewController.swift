@@ -12,7 +12,7 @@ class EntryListTableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+
         tableView.reloadData()
     }
     
@@ -25,8 +25,11 @@ class EntryListTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "entryCell", for: indexPath)
         let entry = EntryController.shared.entries[indexPath.row]
         
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        
         cell.textLabel?.text = entry.title
-//        cell.detailTextLabel?.text = "\(entry.timestamp)"
+        cell.detailTextLabel?.text = dateFormatter.string(from: entry.timestamp)
         
         return cell
     }
